@@ -2,6 +2,7 @@ package com.example.demo.presentation.controller;
 
 import com.example.demo.application.student.StudentDefaultService;
 import com.example.demo.application.student.dto.CreateStudentDTO;
+import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class StudentController {
     StudentDefaultService studentDefaultService;
 
     @GetMapping(path = "get")
-    public List<CreateStudentDTO> getStudents() {
+    public List<StudentDTO> getStudents() {
         return studentDefaultService.get();
     }
 

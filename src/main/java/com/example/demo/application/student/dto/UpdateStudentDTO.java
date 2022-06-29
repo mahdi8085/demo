@@ -2,18 +2,16 @@ package com.example.demo.application.student.dto;
 
 import com.example.demo.domain.student.Student;
 
-public class UpdateStudentDTO {
+public class UpdateStudentDTO extends CreateStudentDTO{
 
     private long id;
     private String firstName;
     private String lastName;
-    private double gpa;
 
-    public UpdateStudentDTO(long id, String firstName, String lastName, double gpa) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gpa = gpa;
+    public UpdateStudentDTO(String fullName, double gpa) {
+        super(fullName, gpa);
+        this.firstName = fullName.split(" ")[0];
+        this.lastName = fullName.split(" ")[1];
     }
 
     public static Student to(UpdateStudentDTO dto, long studentId) {
@@ -34,9 +32,5 @@ public class UpdateStudentDTO {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public double getGpa() {
-        return gpa;
     }
 }

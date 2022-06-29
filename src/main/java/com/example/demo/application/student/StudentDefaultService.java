@@ -1,6 +1,7 @@
 package com.example.demo.application.student;
 
 import com.example.demo.application.student.dto.CreateStudentDTO;
+import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.domain.student.StudentJpaRepository;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentDefaultService implements StudentService{
@@ -18,10 +18,8 @@ public class StudentDefaultService implements StudentService{
     StudentJpaRepository studentJpaRepository;
 
     @Override
-    public List<CreateStudentDTO> get() {
-        return studentJpaRepository.findAll().stream().map(s ->
-                new CreateStudentDTO(s.getId(), s.getFirstName() + " " + s.getLastName(), s.getGpa()))
-                .collect(Collectors.toList());
+    public List<StudentDTO> get() {
+        return StudentDTO.fromStudents(studentJpaRepository.findAll());
     }
 
     @Override

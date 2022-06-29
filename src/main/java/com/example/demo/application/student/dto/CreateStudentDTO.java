@@ -4,12 +4,10 @@ import com.example.demo.domain.student.Student;
 
 public class CreateStudentDTO {
 
-    private long id;
     private String fullName;
     private double gpa;
 
-    public CreateStudentDTO(long id, String fullName, double gpa) {
-        this.id = id;
+    public CreateStudentDTO(String fullName, double gpa) {
         this.fullName = fullName;
         this.gpa = gpa;
     }
@@ -19,10 +17,6 @@ public class CreateStudentDTO {
                 dto.getFullName().split(" ")[0],
                 dto.getFullName().split(" ")[1],
                 dto.getGpa());
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getFullName() {
