@@ -4,7 +4,6 @@ import com.example.demo.domain.student.Student;
 
 public class UpdateStudentDTO extends CreateStudentDTO{
 
-    private long id;
     private String firstName;
     private String lastName;
 
@@ -20,10 +19,6 @@ public class UpdateStudentDTO extends CreateStudentDTO{
                 dto.getFirstName(),
                 dto.getLastName(),
                 dto.getGpa());
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getFirstName() {
