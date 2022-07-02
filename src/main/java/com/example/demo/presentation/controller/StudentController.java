@@ -5,7 +5,6 @@ import com.example.demo.application.student.dto.CreateStudentDTO;
 import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,12 +13,19 @@ import java.util.List;
 @RequestMapping(path = "students")
 public class StudentController {
 
-    @Autowired
     StudentDefaultService studentDefaultService;
 
+    public StudentController(StudentDefaultService studentDefaultService) {
+        this.studentDefaultService = studentDefaultService;
+    }
+
     @GetMapping(path = "get")
-    public List<StudentDTO> getStudents() {
-        return studentDefaultService.get();
+    public List<StudentDTO> getStudents(
+            @RequestParam String lastName,
+            @RequestParam double gpa,
+            @RequestParam int size,
+            @RequestParam int pageSize) {
+        return studentDefaultService.get(lastName, gpa, size, pageSize);
     }
 
     @PostMapping(path = "add")

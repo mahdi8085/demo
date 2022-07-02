@@ -7,6 +7,8 @@ public class CreateStudentDTO {
     private String fullName;
     private double gpa;
 
+    CreateStudentDTO() {}
+
     public CreateStudentDTO(String fullName, double gpa) {
         this.fullName = fullName;
         this.gpa = gpa;

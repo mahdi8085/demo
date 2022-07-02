@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    List<StudentDTO> get();
+    List<StudentDTO> get(String lastName, double gpa, int page, int pageSize);
 
     Student create(CreateStudentDTO dto);
 

@@ -8,6 +8,8 @@ public class UpdateStudentDTO extends CreateStudentDTO {
     private String firstName;
     private String lastName;
 
+    UpdateStudentDTO() {}
+
     public UpdateStudentDTO(long id, String fullName, double gpa) {
         super(fullName, gpa);
         this.firstName = fullName.split(" ")[0];

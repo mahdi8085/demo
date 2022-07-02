@@ -9,6 +9,8 @@ public class StudentDTO extends CreateStudentDTO{
 
     private long id;
 
+    StudentDTO() {}
+
     public StudentDTO(long id, String fullName, double gpa) {
         super(fullName, gpa);
         this.id = id;
