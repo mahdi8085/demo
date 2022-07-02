@@ -5,6 +5,7 @@ import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import com.example.demo.application.student.specification.StudentCriteria;
 import com.example.demo.application.student.specification.StudentSpecification;
+import com.example.demo.application.util.pagination.PageDTO;
 import com.example.demo.application.util.pagination.PaginationDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.domain.student.StudentJpaRepository;
@@ -24,10 +25,15 @@ public class StudentDefaultService implements StudentService{
     }
 
     @Override
-    public List<StudentDTO> get(String lastName, double gpa, int page, int pageSize) {
+    public PageDTO<StudentDTO> get(String lastName, double gpa, int page, int pageSize) {
         Specification<Student> specification = Specification.where(
                 new StudentSpecification(new StudentCriteria(lastName, gpa)));
-        return StudentDTO.fromStudents(studentJpaRepository.findAll(specification, PaginationDTO.pageable(page, pageSize)).getContent());
+        return new PageDTO<>(
+                StudentDTO.fromStudents(
+                        studentJpaRepository.findAll(
+                                specification,
+                                PaginationDTO.pageable(page, pageSize)).getContent()),
+                studentJpaRepository.count(specification));
     }
 
     @Override

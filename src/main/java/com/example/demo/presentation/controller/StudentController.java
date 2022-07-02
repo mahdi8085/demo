@@ -3,11 +3,10 @@ package com.example.demo.presentation.controller;
 import com.example.demo.application.student.StudentDefaultService;
 import com.example.demo.application.student.dto.CreateStudentDTO;
 import com.example.demo.application.student.dto.StudentDTO;
+import com.example.demo.application.util.pagination.PageDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "students")
@@ -20,7 +19,7 @@ public class StudentController {
     }
 
     @GetMapping(path = "get")
-    public List<StudentDTO> getStudents(
+    public PageDTO<StudentDTO> getStudents(
             @RequestParam String lastName,
             @RequestParam double gpa,
             @RequestParam int size,
