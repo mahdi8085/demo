@@ -5,14 +5,15 @@ import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import com.example.demo.application.student.specification.StudentCriteria;
 import com.example.demo.application.student.specification.StudentSpecification;
+import com.example.demo.application.util.actionresponse.SuccessResponseDTO;
 import com.example.demo.application.util.pagination.PageDTO;
 import com.example.demo.application.util.pagination.PaginationDTO;
 import com.example.demo.domain.student.Student;
 import com.example.demo.domain.student.StudentJpaRepository;
+import com.example.demo.infrastructure.ApplicationMessages;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,18 +38,21 @@ public class StudentDefaultService implements StudentService{
     }
 
     @Override
-    public Student create(CreateStudentDTO dto) {
-        return studentJpaRepository.save(CreateStudentDTO.to(dto));
+    public SuccessResponseDTO create(CreateStudentDTO dto) {
+        studentJpaRepository.save(CreateStudentDTO.to(dto));
+        return new SuccessResponseDTO(ApplicationMessages.OPERATION_COMPLETED.getTitle());
     }
 
     @Override
-    public Student update(UpdateStudentDTO dto) {
+    public SuccessResponseDTO update(UpdateStudentDTO dto) {
         Optional<Student> student = studentJpaRepository.findById(dto.getId());
-        return student.map(value -> studentJpaRepository.save(UpdateStudentDTO.to(dto, value.getId()))).orElse(null);
+        student.map(value -> studentJpaRepository.save(UpdateStudentDTO.to(dto, value.getId()))).orElse(null);
+        return new SuccessResponseDTO(ApplicationMessages.OPERATION_COMPLETED.getTitle());
     }
 
     @Override
-    public void delete(Long id) {
+    public SuccessResponseDTO delete(Long id) {
         studentJpaRepository.deleteById(id);
+        return new SuccessResponseDTO(ApplicationMessages.OPERATION_COMPLETED.getTitle());
     }
 }
