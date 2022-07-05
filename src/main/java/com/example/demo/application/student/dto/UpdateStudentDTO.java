@@ -10,8 +10,8 @@ public class UpdateStudentDTO extends CreateStudentDTO {
 
     UpdateStudentDTO() {}
 
-    public UpdateStudentDTO(long id, String fullName, double gpa) {
-        super(fullName, gpa);
+    public UpdateStudentDTO(long id, String username, String password, String fullName, double gpa) {
+        super(username, password, fullName, gpa);
         this.firstName = fullName.split(" ")[0];
         this.lastName = fullName.split(" ")[1];
         this.id = id;

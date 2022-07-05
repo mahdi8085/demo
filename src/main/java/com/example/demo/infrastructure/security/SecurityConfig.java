@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,12 +55,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http = http.cors().and().csrf().disable();
 
+        http = http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
+
         http = http.exceptionHandling().authenticationEntryPoint(
                 (request, response, ex) -> {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
                 }).and();
 
-        http.authorizeRequests().antMatchers("").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("students/get").permitAll().anyRequest().authenticated();
 
         http.addFilterBefore((Filter) jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
