@@ -12,12 +12,15 @@ import com.example.demo.domain.student.Student;
 import com.example.demo.domain.student.StudentJpaRepository;
 import com.example.demo.infrastructure.ApplicationMessages;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class StudentDefaultService implements StudentService{
+public class StudentDefaultService implements UserDetailsService, StudentService{
 
     StudentJpaRepository studentJpaRepository;
 
@@ -54,5 +57,10 @@ public class StudentDefaultService implements StudentService{
     public SuccessResponseDTO delete(Long id) {
         studentJpaRepository.deleteById(id);
         return new SuccessResponseDTO(ApplicationMessages.OPERATION_COMPLETED.getTitle());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return studentJpaRepository.findByUsername(username).orElseThrow(() -> null);
     }
 }
