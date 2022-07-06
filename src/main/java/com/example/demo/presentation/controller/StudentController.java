@@ -34,8 +34,8 @@ public class StudentController {
     }
 
     @PostMapping(path = "add")
-    @PreAuthorize("hasAuthority('" + AuthorityConstant.AUTHORITY_SUPER_ADMIN +
-            "') or hasAuthority('" + AuthorityConstant.AUTHORITY_ADMIN_ADD + "')")
+//    @PreAuthorize("hasAuthority('" + AuthorityConstant.AUTHORITY_SUPER_ADMIN +
+//            "') or hasAuthority('" + AuthorityConstant.AUTHORITY_ADMIN_ADD + "')")
     public ResponseEntity<Object> addStudent(@RequestBody CreateStudentDTO dto) {
         return ResponseEntityUtil.generateSuccessfulRequestResponseEntity(
                 new SuccessfulRequestResponseEntity<>(

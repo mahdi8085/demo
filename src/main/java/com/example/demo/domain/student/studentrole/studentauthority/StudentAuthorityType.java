@@ -24,4 +24,12 @@ public enum StudentAuthorityType {
     public String getTitle() {
         return title;
     }
+
+    public static StudentAuthorityType getByStudentAuthorityTitle(String studentAuthorityTypeTitle){
+        for(StudentAuthorityType studentAuthorityType : StudentAuthorityType.values()){
+            if(studentAuthorityType.getTitle().equals(studentAuthorityTypeTitle))
+                return studentAuthorityType;
+        }
+        throw new RuntimeException("StudentAuthorityType title does not exist in StudentAuthorityType collection.");
+    }
 }

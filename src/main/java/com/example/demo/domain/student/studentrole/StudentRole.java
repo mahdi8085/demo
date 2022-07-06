@@ -11,18 +11,19 @@ import java.util.Set;
 public class StudentRole {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Enumerated(EnumType.STRING)
     private StudentRoleType studentRoleType;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "student_role_authority", joinColumns = @JoinColumn(name = "student_role_id"))
     private Set<StudentAuthority> studentAuthorities = new HashSet<>();
 
     public StudentRole() {}
 
-    public StudentRole(long id, StudentRoleType studentRoleType, Set<StudentAuthority> studentAuthorities) {
-        this.id = id;
+    public StudentRole(StudentRoleType studentRoleType, Set<StudentAuthority> studentAuthorities) {
         this.studentRoleType = studentRoleType;
         this.studentAuthorities = studentAuthorities;
     }

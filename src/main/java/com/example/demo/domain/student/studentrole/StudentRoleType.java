@@ -20,4 +20,12 @@ public enum StudentRoleType {
     public String getTitle() {
         return title;
     }
+
+    public static StudentRoleType getByStudentRoleTypeTitle(String studentRoleTypeTitle){
+        for(StudentRoleType studentRoleType : StudentRoleType.values()){
+            if(studentRoleType.getTitle().equals(studentRoleTypeTitle))
+                return studentRoleType;
+        }
+        throw new RuntimeException("StudentRoleType title does not exist in StudentRoleType collection.");
+    }
 }

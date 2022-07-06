@@ -1,5 +1,6 @@
 package com.example.demo.domain.student;
 
+import com.example.demo.domain.student.studentrole.StudentRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,6 +22,9 @@ public class Student implements UserDetails {
     private String lastName;
     private double gpa;
 
+    @OneToOne
+    private StudentRole studentRole;
+
     public Student() {
     }
 
@@ -35,6 +39,13 @@ public class Student implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gpa = gpa;
+    }
+
+    public Student(String firstName, String lastName, double gpa, StudentRole studentRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gpa = gpa;
+        this.studentRole = studentRole;
     }
 
     @Override
@@ -61,6 +72,10 @@ public class Student implements UserDetails {
 
     public double getGpa() {
         return gpa;
+    }
+
+    public StudentRole getStudentRole() {
+        return studentRole;
     }
 
     @Override
