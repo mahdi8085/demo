@@ -1,6 +1,7 @@
 package com.example.demo.application.student;
 
 import com.example.demo.application.student.dto.CreateStudentDTO;
+import com.example.demo.application.student.dto.SignInDTO;
 import com.example.demo.application.student.dto.StudentDTO;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
 import com.example.demo.application.util.actionresponse.SuccessResponseDTO;
@@ -14,6 +15,8 @@ public interface StudentService {
     PageDTO<StudentDTO> get(String lastName, double gpa, int page, int pageSize);
 
     SuccessResponseDTO create(CreateStudentDTO dto);
+
+    StudentDTO signIn(SignInDTO dto);
 
     SuccessResponseDTO update(UpdateStudentDTO dto);
 

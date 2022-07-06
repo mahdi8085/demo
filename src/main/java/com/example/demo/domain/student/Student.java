@@ -17,21 +17,14 @@ public class Student implements UserDetails {
 
     private String username;
     private String password;
-
     private String firstName;
     private String lastName;
     private double gpa;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private StudentRole studentRole;
 
     public Student() {
-    }
-
-    public Student(String firstName, String lastName, double gpa) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gpa = gpa;
     }
 
     public Student(Long id, String firstName, String lastName, double gpa) {
@@ -41,7 +34,9 @@ public class Student implements UserDetails {
         this.gpa = gpa;
     }
 
-    public Student(String firstName, String lastName, double gpa, StudentRole studentRole) {
+    public Student(String username, String password, String firstName, String lastName, double gpa, StudentRole studentRole) {
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gpa = gpa;
@@ -85,21 +80,21 @@ public class Student implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

@@ -5,6 +5,7 @@ import com.example.demo.domain.student.studentrole.StudentRole;
 import com.example.demo.domain.student.studentrole.StudentRoleType;
 import com.example.demo.domain.student.studentrole.studentauthority.StudentAuthority;
 import com.example.demo.domain.student.studentrole.studentauthority.StudentAuthorityType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +21,6 @@ public class CreateStudentDTO {
 
     CreateStudentDTO() {}
 
-    public CreateStudentDTO(String fullName, double gpa) {
-        this.fullName = fullName;
-        this.gpa = gpa;
-    }
-
     public CreateStudentDTO(String username, String password, String fullName, double gpa,
                             String studentRoleType, Set<String> studentAuthorityTypes) {
         this.username = username;
@@ -35,20 +31,26 @@ public class CreateStudentDTO {
         this.studentAuthorityTypes = studentAuthorityTypes;
     }
 
-    public static Student to(CreateStudentDTO dto) {
+    public static Student to(CreateStudentDTO dto, PasswordEncoder passwordEncoder){
         Set<StudentAuthority> authorities = new HashSet<>();
-        dto.getStudentAuthorityTypes().stream().map(studentAuthorityType ->
-                authorities.add(
-                        new StudentAuthority(
-                                StudentAuthorityType.getByStudentAuthorityTitle(studentAuthorityType)
-                )
-        ));
+        for(String type: dto.getStudentAuthorityTypes()) {
+            authorities.add(
+                    new StudentAuthority(
+                            StudentAuthorityType.getByStudentAuthorityTitle(type)
+                    )
+            );
+        }
         return new Student(
+                dto.getUsername(),
+                passwordEncoder.encode(dto.getPassword()),
                 dto.getFullName().split(" ")[0],
                 dto.getFullName().split(" ")[1],
+
                 dto.getGpa(),
-                new StudentRole(StudentRoleType.getByStudentRoleTypeTitle(dto.studentRoleType),
-                        authorities));
+                new StudentRole(StudentRoleType.getByStudentRoleTypeTitle(
+                        dto.getStudentRoleType()),
+                        authorities
+                ));
     }
 
     public String getUsername() {

@@ -2,7 +2,9 @@ package com.example.demo.presentation.controller;
 
 import com.example.demo.application.student.StudentDefaultService;
 import com.example.demo.application.student.dto.CreateStudentDTO;
+import com.example.demo.application.student.dto.SignInDTO;
 import com.example.demo.application.student.dto.UpdateStudentDTO;
+import com.example.demo.domain.student.studentrole.StudentRoleType;
 import com.example.demo.presentation.authorityconstant.AuthorityConstant;
 import com.example.demo.presentation.responseentity.ResponseEntityUtil;
 import com.example.demo.presentation.responseentity.response.SuccessfulRequestResponseEntity;
@@ -34,12 +36,21 @@ public class StudentController {
     }
 
     @PostMapping(path = "add")
-//    @PreAuthorize("hasAuthority('" + AuthorityConstant.AUTHORITY_SUPER_ADMIN +
-//            "') or hasAuthority('" + AuthorityConstant.AUTHORITY_ADMIN_ADD + "')")
+    @PreAuthorize("hasAuthority('" + AuthorityConstant.AUTHORITY_SUPER_ADMIN +
+            "') or hasAuthority('" + AuthorityConstant.AUTHORITY_ADMIN_ADD + "')")
     public ResponseEntity<Object> addStudent(@RequestBody CreateStudentDTO dto) {
         return ResponseEntityUtil.generateSuccessfulRequestResponseEntity(
                 new SuccessfulRequestResponseEntity<>(
                         studentDefaultService.create(dto)
+                )
+        );
+    }
+
+    @PostMapping(path = "signIn")
+    public ResponseEntity<Object> signInStudent(@RequestBody SignInDTO dto) {
+        return ResponseEntityUtil.generateSuccessfulRequestResponseEntity(
+                new SuccessfulRequestResponseEntity<>(
+                        studentDefaultService.signIn(dto)
                 )
         );
     }
@@ -56,8 +67,7 @@ public class StudentController {
     }
 
     @DeleteMapping(path = "delete/{id}")
-    @PreAuthorize("hasAuthority('" + AuthorityConstant.AUTHORITY_SUPER_ADMIN +
-            "') or hasAuthority('" + AuthorityConstant.AUTHORITY_ADMIN_DELETE + "')")
+//    @PreAuthorize("hasRole("+StudentRoleType.ROLE_ADMIN+")")
     public ResponseEntity<Object> deleteStudentById(@PathVariable Long id) {
         return ResponseEntityUtil.generateSuccessfulRequestResponseEntity(
                 new SuccessfulRequestResponseEntity<>(
