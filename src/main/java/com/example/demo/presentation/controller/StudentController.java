@@ -67,7 +67,7 @@ public class StudentController {
     }
 
     @DeleteMapping(path = "delete/{id}")
-//    @PreAuthorize("hasRole("+StudentRoleType.ROLE_ADMIN+")")
+//    @PreAuthorize("hasAuthority('AUTHORITY_SUPER_ADMIN')")
     public ResponseEntity<Object> deleteStudentById(@PathVariable Long id) {
         return ResponseEntityUtil.generateSuccessfulRequestResponseEntity(
                 new SuccessfulRequestResponseEntity<>(

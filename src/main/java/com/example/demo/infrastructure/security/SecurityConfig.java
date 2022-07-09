@@ -65,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
                 }).and();
 
-        http.authorizeRequests().mvcMatchers("/students/get", "/students/add", "/students/signIn").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().mvcMatchers("/students/get", "/students/add", "/students/signIn")
+                .permitAll().anyRequest().authenticated();
 
         http.addFilterBefore((Filter) jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
